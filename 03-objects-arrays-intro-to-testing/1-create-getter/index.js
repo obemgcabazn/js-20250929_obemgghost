@@ -11,7 +11,7 @@ export function createGetter(path) {
       if (Object.hasOwn(tempObj, prop)) {
         tempObj = tempObj[prop];
       } else {
-        return undefined;
+        return;
       }
     }
     return tempObj;
