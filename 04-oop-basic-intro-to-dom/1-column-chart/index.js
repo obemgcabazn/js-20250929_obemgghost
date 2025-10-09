@@ -46,19 +46,19 @@ export default class ColumnChart {
 
       data.forEach((item) => {
         const div = document.createElement('div');
-        div.style = `--value: ${item * scale}`;
-        div.dataset.tooltip = `${item / maxValue * 100}%`;
+        div.style = `--value: ${Math.floor(item * scale)}`;
+        div.dataset.tooltip = `${Math.round(item / maxValue * 100 )}%`;
         this.chart.append(div);
       });
     }
   }
 
-  remove(){
+  remove() {
     this.element.remove();
   }
 
   destroy() {
-    this.element.remove();
+    this.remove();
   }
 }
 
