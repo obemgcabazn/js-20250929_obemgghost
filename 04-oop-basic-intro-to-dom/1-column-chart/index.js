@@ -3,8 +3,7 @@ export default class ColumnChart {
 
   constructor({data = [], label = '', value, link, formatHeading} = {}) {
     this.formatHeading = formatHeading;
-    this.element = createDiv('column-chart');
-    this.element.classList.add('column-chart_loading');
+    this.element = createDiv('column-chart column-chart_loading');
     this.element.style = `--chart-height: ${this.chartHeight}`;
 
     const title = createDiv('column-chart__title');
@@ -67,6 +66,6 @@ skeleton.src = 'charts-skeleton.svg';
 
 function createDiv(className) {
   const div = document.createElement('div');
-  div.classList.add(className);
+  div.classList = className;
   return div;
 }
