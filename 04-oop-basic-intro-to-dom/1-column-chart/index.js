@@ -46,7 +46,7 @@ export default class ColumnChart {
       data.forEach((item) => {
         const div = document.createElement('div');
         div.style = `--value: ${Math.floor(item * scale)}`;
-        div.dataset.tooltip = `${Math.round(item / maxValue * 100 )}%`;
+        div.dataset.tooltip = `${Math.round(item / maxValue * 100)}%`;
         this.chart.append(div);
       });
     }
@@ -60,9 +60,6 @@ export default class ColumnChart {
     this.remove();
   }
 }
-
-const skeleton = document.createElement('img');
-skeleton.src = 'charts-skeleton.svg';
 
 function createDiv(className) {
   const div = document.createElement('div');
