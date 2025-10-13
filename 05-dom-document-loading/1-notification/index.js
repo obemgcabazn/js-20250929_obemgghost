@@ -6,6 +6,7 @@ function createDiv(className, content = '') {
 }
 
 export default class NotificationMessage {
+  static activeNotification = null;
   constructor(message, {duration = 1000, type = 'success'} = {}) {
     this.message = message;
     this.duration = duration;
@@ -29,11 +30,18 @@ export default class NotificationMessage {
   }
 
   show(target = document.body) {
+    if(NotificationMessage.activeNotification) {
+      NotificationMessage.activeNotification.destroy();
+    }
+    NotificationMessage.activeNotification = this;
     target.append(this.element);
     setTimeout(this.destroy.bind(this), this.duration);
   }
 
   destroy() {
+    if (NotificationMessage.activeNotification === this) {
+      NotificationMessage.activeNotification = null;
+    }
     this.remove();
   }
 
