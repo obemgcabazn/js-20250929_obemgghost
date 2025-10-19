@@ -7,7 +7,9 @@
     "lint": "eslint \"./**/*.js\"",
     "lint:fix": "eslint --fix \"./**/*.js\"",
     "test": "cross-env NODE_ICU_DATA=node_modules/full-icu jest",
-    "test:specific": "cross-env NODE_ICU_DATA=node_modules/full-icu jest -t 'intro/sum'"
+    "test:specific": "cross-env NODE_ICU_DATA=node_modules/full-icu jest -t 'intro/sum'",
+    "test:notification": "cross-env NODE_ICU_DATA=node_modules/full-icu jest -t 'dom-document-loading/notification'",
+    "test:watch": "cross-env NODE_ICU_DATA=node_modules/full-icu jest -t 'dom-document-loading/sortable-table-v1' --watch"
   },
   "repository": {
     "type": "git",
