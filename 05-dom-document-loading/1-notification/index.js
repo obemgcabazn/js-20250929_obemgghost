@@ -30,12 +30,12 @@ export default class NotificationMessage {
   }
 
   show(target = document.body) {
-    if(NotificationMessage.activeNotification) {
+    if (NotificationMessage.activeNotification) {
       NotificationMessage.activeNotification.destroy();
     }
     NotificationMessage.activeNotification = this;
     target.append(this.element);
-    setTimeout(this.destroy.bind(this), this.duration);
+    this.timerId = setTimeout(this.destroy.bind(this), this.duration);
   }
 
   destroy() {
@@ -43,6 +43,9 @@ export default class NotificationMessage {
       NotificationMessage.activeNotification = null;
     }
     this.remove();
+    clearTimeout(this.timerId);
+
+
   }
 
   remove() {
