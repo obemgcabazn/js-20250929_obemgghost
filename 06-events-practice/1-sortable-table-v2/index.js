@@ -135,7 +135,7 @@ export default class SortableTable {
     }
 
     function reverseOrder(order) {
-      return order === 'asc' ? 'desc' : 'asc';
+      return order === 'desc' ? 'asc' : 'desc';
     }
 
     if (this.sorted.id === tableCell.dataset.id) {
