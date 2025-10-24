@@ -1,4 +1,4 @@
-function createDiv(className, content = '') {
+function createDivElement(className, content = '') {
   const div = document.createElement('div');
   div.classList = className;
   div.textContent = content;
@@ -10,7 +10,7 @@ export default class SortableTable {
     this.headerConfig = headerConfig;
     this.data = data;
 
-    this.body = createDiv('sortable-table__body');
+    this.body = createDivElement('sortable-table__body');
     this.body.dataset.element = 'body';
 
     this.subElements = {
@@ -21,35 +21,33 @@ export default class SortableTable {
   }
 
   sort(field, order) {
-    const sortingConfig = this.headerConfig.filter((i) => i.id === field)[0];
-    if (!sortingConfig.sortable) {
+    const sortingConfig = this.headerConfig.find((config) => config.id === field);
+    if (!sortingConfig?.sortable) {
       return;
     }
 
-    if (sortingConfig.sortType === 'string') {
-      const collator = new Intl.Collator('ru', { caseFirst: 'upper' });
-      if (order === 'asc') {
-        this.data = this.data.sort((a, b) => collator.compare(a[field], b[field]));
-      } else {
-        this.data = this.data.sort((a, b) => collator.compare(b[field], a[field]));
+    const compareFn = (a, b) => {
+      if (sortingConfig.sortType === 'string') {
+        const collator = new Intl.Collator('ru', { caseFirst: 'upper' });
+        return order === 'asc' ?
+          collator.compare(a[field], b[field]) :
+          collator.compare(b[field], a[field]);
       }
-    } else {
-      if (order === 'asc') {
-        this.data = this.data.sort((a, b) => a[field] - b[field]);
-      } else {
-        this.data = this.data.sort((a, b) => b[field] - a[field]);
-      }
-    }
+
+      return order === 'asc' ? a[field] - b[field] : b[field] - a[field];
+    };
+
+    this.data.sort(compareFn);
 
     this.createBodyElement();
   }
 
   createHeaderElement() {
-    const header = createDiv('sortable-table__header sortable-table__row');
+    const header = createDivElement('sortable-table__header sortable-table__row');
     header.dataset.element = 'header';
 
     this.headerConfig.map((column) => {
-      const columnElement = createDiv('sortable-table__cell');
+      const columnElement = createDivElement('sortable-table__cell');
       columnElement.dataset.id = column.id;
       columnElement.dataset.sortable = column.sortable;
 
@@ -87,7 +85,7 @@ export default class SortableTable {
   }
 
   createTemplate() {
-    const template = createDiv('sortable-table');
+    const template = createDivElement('sortable-table');
     template.append(this.createHeaderElement());
     template.append(this.createBodyElement());
     return template;
