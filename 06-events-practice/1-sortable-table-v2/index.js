@@ -156,6 +156,6 @@ export default class SortableTable {
 
   destroy() {
     this.remove();
-    window.removeEventListener('click', this.onTableCellClick);
+    window.removeEventListener('pointerdown', this.onTableCellClick);
   }
 }
