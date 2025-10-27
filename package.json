@@ -9,6 +9,7 @@
     "test": "cross-env NODE_ICU_DATA=node_modules/full-icu jest",
     "test:specific": "cross-env NODE_ICU_DATA=node_modules/full-icu jest -t 'intro/sum'",
     "test:notification": "cross-env NODE_ICU_DATA=node_modules/full-icu jest -t 'dom-document-loading/notification'",
+    "test:watch1": "cross-env NODE_ICU_DATA=node_modules/full-icu jest -t 'dom-document-loading/sortable-table-v1' --watch",
     "test:watch": "cross-env NODE_ICU_DATA=node_modules/full-icu jest -t 'events-practice/sortable-table-v2' --watch"
   },
   "repository": {
