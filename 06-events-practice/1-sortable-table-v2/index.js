@@ -12,6 +12,7 @@ export default class SortableTable {
   } = {}) {
     this.headerConfig = headersConfig;
     this.data = data;
+
     this.sorted = sorted;
 
     this.element = this.createElement();
@@ -135,7 +136,7 @@ export default class SortableTable {
     }
 
     function reverseOrder(order) {
-      return order === 'asc' ? 'desc' : 'asc';
+      return order === 'desc' ? 'asc' : 'desc';
     }
 
     if (this.sorted.id === tableCell.dataset.id) {
@@ -156,6 +157,6 @@ export default class SortableTable {
 
   destroy() {
     this.remove();
-    window.removeEventListener('click', this.onTableCellClick);
+    window.removeEventListener('pointerdown', this.onTableCellClick);
   }
 }
