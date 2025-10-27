@@ -12,6 +12,7 @@ export default class SortableTable {
   } = {}) {
     this.headerConfig = headersConfig;
     this.data = data;
+
     this.sorted = sorted;
 
     this.element = this.createElement();
