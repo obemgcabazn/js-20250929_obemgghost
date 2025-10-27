@@ -10,6 +10,8 @@ export default class SortableTable {
     this.headerConfig = headerConfig;
     this.data = data;
 
+    this.sorted = {};
+
     this.element = this.createElement();
     this.subElements = this.getSubElements();
   }
@@ -107,6 +109,7 @@ export default class SortableTable {
     const newElement = this.createElement();
     this.element.replaceWith(newElement);
     this.element = newElement;
+    this.subElements = this.getSubElements();
   }
 
   remove() {
