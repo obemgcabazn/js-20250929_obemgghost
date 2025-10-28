@@ -1,12 +1,5 @@
 import SortableTableV1 from "./sortable-table-v1.js";
 
-function createDivElement(className = '', content = '') {
-  const div = document.createElement('div');
-  div.classList = className;
-  div.textContent = content;
-  return div;
-}
-
 export default class SortableTableV2 extends SortableTableV1 {
   constructor(headersConfig, {
     data = [],
