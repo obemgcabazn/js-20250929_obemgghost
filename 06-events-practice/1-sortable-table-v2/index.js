@@ -1,12 +1,5 @@
 import SortableTableV1 from "./sortable-table-v1.js";
 
-function createDivElement(className = '', content = '') {
-  const div = document.createElement('div');
-  div.classList = className;
-  div.textContent = content;
-  return div;
-}
-
 export default class SortableTableV2 extends SortableTableV1 {
   constructor(headersConfig, {
     data = [],
@@ -49,7 +42,7 @@ export default class SortableTableV2 extends SortableTableV1 {
     }
 
     function reverseOrder(order) {
-      return order === 'desc' ? 'asc' : 'desc';
+      return order === 'asc' ? 'desc' : 'asc';
     }
 
     if (this.sorted.id === tableCell.dataset.id) {
@@ -58,7 +51,7 @@ export default class SortableTableV2 extends SortableTableV1 {
       this.sorted.order = newSortOrder;
     } else {
       this.sorted.id = tableCell.dataset.id;
-      this.sorted.order = 'asc';
+      this.sorted.order = 'desc';
     }
 
     this.sort(this.sorted.id, this.sorted.order);
