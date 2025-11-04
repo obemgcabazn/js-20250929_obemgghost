@@ -50,7 +50,8 @@ describe('async-code-fetch-api-part-1/sortable-table-v3', () => {
   let sortableTable;
 
   beforeEach(() => {
-    fetchMock.resetMocks();
+    // fetchMock.resetMocks();
+    fetchMock.mockResponse(JSON.stringify(products));
 
     sortableTable = new SortableTable(headerConfig, {
       url: 'api/rest/products',
@@ -76,13 +77,13 @@ describe('async-code-fetch-api-part-1/sortable-table-v3', () => {
   });
 
   it('should call "loadData" method', () => {
-    fetchMock.mockResponseOnce();
+    // fetchMock.mockResponseOnce();
 
     expect(fetchMock.mock.calls.length).toEqual(1);
   });
 
   it('should render loaded data correctly', async() => {
-    fetchMock.mockResponseOnce(JSON.stringify(products));
+    // fetchMock.mockResponseOnce(JSON.stringify(products));
 
     await sortableTable.render();
 
@@ -107,7 +108,7 @@ describe('async-code-fetch-api-part-1/sortable-table-v3', () => {
       }
     });
 
-    fetchMock.mockResponseOnce(JSON.stringify(bestsellers));
+    // fetchMock.mockResponseOnce(JSON.stringify(bestsellers));
 
     await sortableTable.render();
 
@@ -127,7 +128,7 @@ describe('async-code-fetch-api-part-1/sortable-table-v3', () => {
   });
 
   it('should call "sortOnServer" for sorting on the server side', async() => {
-    fetchMock.mockResponseOnce(JSON.stringify(products));
+    // fetchMock.mockResponseOnce(JSON.stringify(products));
 
     await sortableTable.render();
 
