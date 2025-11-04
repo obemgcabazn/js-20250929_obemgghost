@@ -4,7 +4,7 @@ const BACKEND_URL = 'https://course-js.javascript.ru';
 
 export default class ColumnChart {
   chartHeight = 50;
-  constructor({url = '', range, label, value = null, link, formatHeading} = {}) {
+  constructor({url = '', range = {}, label, value = null, link, formatHeading} = {}) {
     this.url = url;
     this.from = range.from;
     this.to = range.to;
@@ -14,19 +14,38 @@ export default class ColumnChart {
     this.formatHeading = formatHeading;
 
     this.element = this.createElement();
-    this.update(this.from, this.to);
+    this.subElements = this.getSubElements();
+
+    if (this.from && this.to) {
+      this.update(this.from, this.to);
+    }
+  }
+
+  getSubElements() {
+    const result = {};
+    const elements = this.element.querySelectorAll('[data-element]');
+
+    for (const subElement of elements) {
+      const name = subElement.dataset.element;
+      result[name] = subElement;
+    }
+
+    return result;
   }
 
   async update(from, to) {
     await this.fetchData(this.url, from, to);
 
-    if (this.data.length !== 0) {
+    if (this.data && Object.keys(this.data).length !== 0) {
       this.value = this.getTotal();
-      const newElement = this.createElement();
-      this.element.replaceWith(newElement);
-      this.element = newElement;
+      if (this.subElements.header) {
+        this.subElements.header.textContent = this.headingValue;
+      }
+
+      if (this.subElements.body) {
+        this.subElements.body.innerHTML = this.createChartBarsElement();
+      }
       this.element.classList.remove('column-chart_loading');
-      // this.subElements = this.getSubElements();
     }
 
     return this.data;
@@ -56,13 +75,9 @@ export default class ColumnChart {
   }
 
   createBodyTemplate() {
-    if (!this.data) {
-      return '';
-    }
-
     return `
     <div data-element="body" class="column-chart__chart">
-      ${this.createChartBarsElement()}
+      ${this.data ? this.createChartBarsElement() : ''}
     </div>
     `;
   }
