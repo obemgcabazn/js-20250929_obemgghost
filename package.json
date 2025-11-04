@@ -8,7 +8,7 @@
     "lint:fix": "eslint --fix \"./**/*.js\"",
     "test": "cross-env NODE_ICU_DATA=node_modules/full-icu jest",
     "test:specific": "cross-env NODE_ICU_DATA=node_modules/full-icu jest -t 'intro/sum'",
-    "test:chart": "cross-env NODE_ICU_DATA=node_modules/full-icu jest -t 'async-code-fetch-api-part-1/column-chart' --watch",
+    "test:table": "cross-env NODE_ICU_DATA=node_modules/full-icu jest -t 'async-code-fetch-api-part-1/sortable-table-v3' --watch",
     "prepare": "husky"
   },
   "repository": {
