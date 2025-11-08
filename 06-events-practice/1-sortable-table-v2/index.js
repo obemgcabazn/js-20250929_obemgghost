@@ -32,7 +32,7 @@ export default class SortableTableV2 extends SortableTableV1 {
   }
 
   setListeners() {
-    window.addEventListener('pointerdown', this.onTableCellClick);
+    this.element.addEventListener('pointerdown', this.onTableCellClick);
   }
 
   onTableCellClick = (event) => {
@@ -59,6 +59,6 @@ export default class SortableTableV2 extends SortableTableV1 {
 
   destroy() {
     this.remove();
-    window.removeEventListener('pointerdown', this.onTableCellClick);
+    this.element.removeEventListener('pointerdown', this.onTableCellClick);
   }
 }

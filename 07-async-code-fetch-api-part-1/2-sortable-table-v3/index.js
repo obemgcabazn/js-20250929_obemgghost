@@ -1,5 +1,5 @@
 import fetchJson from './utils/fetch-json.js';
-import SortableTableV2 from "./sortable-table-v2.js";
+import SortableTableV2 from "../../06-events-practice/1-sortable-table-v2/index.js";
 
 const BACKEND_URL = 'https://course-js.javascript.ru';
 

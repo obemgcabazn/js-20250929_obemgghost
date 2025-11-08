@@ -14,6 +14,9 @@ class Tooltip {
     this.mouseX = 0;
     this.mouseY = 0;
 
+    this.onPointerEvent = this.createTooltipElement.bind(this);
+    this.onPointerOver = this.destroy.bind(this);
+
     if (Tooltip.activeNotification) {
       return Tooltip.activeNotification;
     }
@@ -33,15 +36,15 @@ class Tooltip {
   }
 
   createTooltipElement(event) {
-    const text = event.target.dataset.tooltip;
-    this.render(text);
+    if (event.target.dataset.tooltip) {
+      const text = event.target.dataset.tooltip;
+      this.render(text);
+    }
   }
 
   setListeners() {
-    this.tooltips.forEach((tooltip)=> {
-      tooltip.addEventListener('pointerover', this.createTooltipElement.bind(this));
-      tooltip.addEventListener('pointerout', this.destroy.bind(this));
-    });
+    document.body.addEventListener('pointerover', this.onPointerEvent);
+    document.body.addEventListener('pointerout', this.onPointerOver);
 
     document.addEventListener('pointermove', (event) => {
       this.mouseX = event.clientX;
@@ -60,6 +63,7 @@ class Tooltip {
     });
   }
 
+
   remove() {
     if (this.element) {
       this.element.remove();
@@ -67,6 +71,8 @@ class Tooltip {
   }
 
   destroy() {
+    document.body.removeEventListener('pointerover', this.onPointerEvent);
+    document.body.removeEventListener('pointerout', this.onPointerOver);
     this.remove();
   }
 
