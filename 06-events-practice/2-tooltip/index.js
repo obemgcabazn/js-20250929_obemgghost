@@ -23,7 +23,6 @@ class Tooltip {
     Tooltip.activeNotification = this;
   }
   initialize () {
-    this.tooltips = document.querySelectorAll('[data-tooltip]');
     this.setListeners();
   }
 
@@ -71,8 +70,6 @@ class Tooltip {
   }
 
   destroy() {
-    document.body.removeEventListener('pointerover', this.onPointerEvent);
-    document.body.removeEventListener('pointerout', this.onPointerOver);
     this.remove();
   }
 

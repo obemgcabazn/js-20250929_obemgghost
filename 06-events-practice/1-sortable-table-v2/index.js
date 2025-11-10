@@ -35,18 +35,18 @@ export default class SortableTableV2 extends SortableTableV1 {
     this.element.addEventListener('pointerdown', this.onTableCellClick);
   }
 
+  reverseOrder(order) {
+    return order === 'asc' ? 'desc' : 'asc';
+  }
+
   onTableCellClick = (event) => {
     const tableCell = event.target.closest('.sortable-table__cell');
     if (!tableCell || tableCell.dataset.sortable === 'false') {
       return;
     }
 
-    function reverseOrder(order) {
-      return order === 'asc' ? 'desc' : 'asc';
-    }
-
     if (this.sorted.id === tableCell.dataset.id) {
-      const newSortOrder = reverseOrder(this.sorted.order);
+      const newSortOrder = this.reverseOrder(this.sorted.order);
       tableCell.dataset.order = newSortOrder;
       this.sorted.order = newSortOrder;
     } else {
