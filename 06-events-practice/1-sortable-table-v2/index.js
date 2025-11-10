@@ -1,6 +1,7 @@
 import SortableTableV1 from "./sortable-table-v1.js";
 
 export default class SortableTableV2 extends SortableTableV1 {
+
   constructor(headersConfig, {
     data = [],
     sorted = {}
@@ -8,7 +9,7 @@ export default class SortableTableV2 extends SortableTableV1 {
     super(headersConfig, data);
 
     this.sorted = sorted;
-    this.sort(this.sorted.id, this.sorted.order);
+    // this.sort(this.sorted.id, this.sorted.order);
     this.setListeners();
   }
 
@@ -33,6 +34,11 @@ export default class SortableTableV2 extends SortableTableV1 {
 
   setListeners() {
     this.element.addEventListener('pointerdown', this.onTableCellClick);
+  }
+
+  updateElement() {
+    super.updateElement();
+    this.setListeners();
   }
 
   reverseOrder(order) {

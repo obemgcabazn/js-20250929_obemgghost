@@ -4,6 +4,10 @@ import SortableTableV2 from "../../06-events-practice/1-sortable-table-v2/index.
 const BACKEND_URL = 'https://course-js.javascript.ru';
 
 export default class SortableTable extends SortableTableV2 {
+
+  INFINITY_SCROLL_GAP = 40;
+  LOADING_PRODUCT_STEP = 10;
+
   constructor(headersConfig, {
     data = [],
     sorted = {},
@@ -14,6 +18,9 @@ export default class SortableTable extends SortableTableV2 {
     this.url = url;
     this.isSortLocally = isSortLocally;
 
+    this.start = 0;
+    this.end = this.LOADING_PRODUCT_STEP;
+
     this.render();
   }
 
@@ -22,6 +29,25 @@ export default class SortableTable extends SortableTableV2 {
       this.sortOnClient(id, order);
     } else {
       this.sortOnServer(id, order);
+    }
+  }
+
+  sortOnClient(id, order) {
+    super.sort(id, order);
+  }
+
+  async sortOnServer(id, order) {
+    this.isLoading = true;
+    try {
+      const fetchUrl = this.createFetchURL(id, order, 0, this.end);
+      const response = await fetch(fetchUrl);
+      this.data = await response.json();
+      this.updateElement();
+
+    } catch (e) {
+      console.error(e);
+    } finally {
+      this.isLoading = false;
     }
   }
 
@@ -55,31 +81,54 @@ export default class SortableTable extends SortableTableV2 {
     }
   }
 
-  sortOnClient(id, order) {
-    this.sort(id, order);
+  setListeners() {
+    super.setListeners();
+    if (!this.isSortLocally) {
+      document.addEventListener('scroll', this.onWindowScroll);
+    }
   }
 
-  async sortOnServer(id, order) {
+  onWindowScroll = (e) => {
+    if (this.isLoading) {
+      return;
+    }
+    const { bottom } = this.element.getBoundingClientRect();
+    const { clientHeight } = document.documentElement;
+    if (bottom < clientHeight + this.INFINITY_SCROLL_GAP) {
+      console.log('fetch');
+      this.loadMoreData();
+    }
+  }
+
+  createFetchURL(id, order, startProduct = 0, endProduct = 30) {
+    const params = new URLSearchParams({
+      _embed: 'subcategory.category',
+      _sort: id,
+      _order: order,
+      _start: startProduct,
+      _end: endProduct
+    });
+    return `${BACKEND_URL}/${this.url}?${params.toString()}`;
+  }
+
+  async loadMoreData() {
+    this.isLoading = true;
+    this.start = this.end;
+    this.end = this.start + this.LOADING_PRODUCT_STEP;
+
     try {
-      const params = new URLSearchParams({
-        _embed: 'subcategory.category',
-        _sort: id,
-        _order: order,
-        _start: 0,
-        _end: 30
-      });
-
-      const fetchUrl = `${BACKEND_URL}/${this.url}?${params.toString()}`;
+      const fetchUrl = this.createFetchURL(this.sorted.id, this.sorted.order, this.start, this.end);
       const response = await fetch(fetchUrl);
-      this.data = await response.json();
+      const newData = await response.json();
 
-      const newElement = this.createElement();
-      this.element.replaceWith(newElement);
-      this.element = newElement;
-      this.subElements = this.getSubElements();
-      this.setListeners();
+      if (newData.length > 0) {
+        this.data.push(...newData);
+        this.updateElement();
+      }
     } catch (e) {
       console.error(e);
+    } finally {
+      this.isLoading = false;
     }
   }
 
