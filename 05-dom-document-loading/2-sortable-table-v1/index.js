@@ -85,7 +85,7 @@ export default class SortableTable {
     `;
   }
 
-  sort = (field, order) => {
+  sort(field, order) {
     this.sorted.id = field;
     this.sorted.order = order;
 

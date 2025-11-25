@@ -5,12 +5,13 @@ export default class SortableTableV2 extends SortableTableV1 {
     data = [],
     sorted = {},
     url = '',
-    isSortLocally = false
+    isSortLocally = true
   } = {}) {
     super(headersConfig, data);
     this.sorted = sorted;
     this.url = url;
     this.isSortLocally = isSortLocally;
+
     this.sort(this.sorted.id, this.sorted.order);
   }
 
@@ -59,11 +60,11 @@ export default class SortableTableV2 extends SortableTableV1 {
     this.sort(this.sorted.id, this.sorted.order);
   }
 
-  sort(sortField, sortOrder) {
+  async sort(sortField, sortOrder) {
     if (this.isSortLocally) {
       this.sortOnClient(sortField, sortOrder);
     } else {
-      this.sortOnServer(sortField, sortOrder);
+      await this.sortOnServer(sortField, sortOrder);
     }
   }
 
@@ -71,7 +72,7 @@ export default class SortableTableV2 extends SortableTableV1 {
     super.sort(sortField, sortOrder);
   }
 
-  sortOnServer(sortField, sortOrder) {
+  async sortOnServer(sortField, sortOrder) {
     throw new Error("not implemented");
   }
 
@@ -80,9 +81,8 @@ export default class SortableTableV2 extends SortableTableV1 {
     this.setListeners();
   }
 
-
   destroy() {
-    this.remove();
     this.element.removeEventListener('pointerdown', this.onTableCellClick);
+    this.remove();
   }
 }

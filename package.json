@@ -8,10 +8,10 @@
     "lint:fix": "eslint --fix \"./**/*.js\"",
     "test": "cross-env NODE_ICU_DATA=node_modules/full-icu jest",
     "test:specific": "cross-env NODE_ICU_DATA=node_modules/full-icu jest -t 'intro/sum'",
+    "test:tooltips": "cross-env NODE_ICU_DATA=node_modules/full-icu jest -t 'events-practice/tooltip' --watch",
     "test:table-v1": "cross-env NODE_ICU_DATA=node_modules/full-icu jest -t 'dom-document-loading/sortable-table-v1' --watch",
     "test:table-v2": "cross-env NODE_ICU_DATA=node_modules/full-icu jest -t 'events-practice/sortable-table-v2' --watch",
-    "test:tooltips": "cross-env NODE_ICU_DATA=node_modules/full-icu jest -t 'events-practice/tooltip' --watch",
-    "test:table": "cross-env NODE_ICU_DATA=node_modules/full-icu jest -t 'async-code-fetch-api-part-1/sortable-table-v3' --watch",
+    "test:table-v3": "cross-env NODE_ICU_DATA=node_modules/full-icu jest -t 'async-code-fetch-api-part-1/sortable-table-v3' --watch",
     "prepare": "husky"
   },
   "repository": {

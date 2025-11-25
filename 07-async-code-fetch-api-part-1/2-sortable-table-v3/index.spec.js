@@ -50,7 +50,7 @@ describe('async-code-fetch-api-part-1/sortable-table-v3', () => {
   let sortableTable;
 
   beforeEach(() => {
-    // fetchMock.resetMocks();
+    fetchMock.resetMocks();
     fetchMock.mockResponse(JSON.stringify(products));
 
     sortableTable = new SortableTable(headerConfig, {

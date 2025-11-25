@@ -5,10 +5,10 @@ const BACKEND_URL = 'https://course-js.javascript.ru';
 
 export default class SortableTable extends SortableTableV2 {
   constructor(headersConfig, settings) {
-    super(headersConfig, settings);
-
-    this.sort(this.sorted.id, this.sorted.order);
-    this.setListeners();
+    super(headersConfig, {
+      isSortLocally: false,
+      ...settings           
+    });
   }
 
   async sortOnServer (id, order) {
@@ -23,8 +23,13 @@ export default class SortableTable extends SortableTableV2 {
 
       const fetchUrl = BACKEND_URL + `/${this.url}/?${params.toString()}`;
       const response = await fetch(fetchUrl);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error: ${response.status}`);
+      }
+
       this.data = await response.json();
-      super.render();
+      this.render();
     } catch (e) {
       console.error(e);
     }
