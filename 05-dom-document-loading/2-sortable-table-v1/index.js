@@ -106,6 +106,10 @@ export default class SortableTable {
     };
 
     this.data.sort(compareFn);
+    this.render();
+  }
+
+  render() {
     const newElement = this.createElement();
     this.element.replaceWith(newElement);
     this.element = newElement;
